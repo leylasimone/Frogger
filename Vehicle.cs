@@ -44,15 +44,23 @@ public class Vehicle : MonoBehaviour
         {
             transform.Translate(Vector2.right * Time.deltaTime * speed * moveDirection);
         }
-        //when you multiply the inequality on both sides by -1 (or divide by -1) the inequalit changes
+        //when you multiply the inequality on both sides by -1 (or divide by -1) the inequality changes
         if ((transform.position.x * moveDirection) > (endPosition.x * moveDirection))
         {
             transform.position = startingPosition;
         }
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //Detect collisions between the GameObjects with Colliders attached
 
+        //Check for a match with the specified name on any GameObject that collides with your GameObject
+        if (gameObject.name == "Rabbit")
+        {
+            //If the GameObject's name matches the one you suggest, output this message in the console
+            Debug.Log("Do something");
+        }
     }
 
 }
