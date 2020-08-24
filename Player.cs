@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
@@ -12,7 +12,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public string playerName = ""; //The players name for the purpose of storing the high score
-
+    
     public GameObject scoreText;
 
     public const int playerTotalLives = 10; //Players total possible lives.
@@ -40,19 +40,19 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKeyUp(KeyCode.UpArrow) && transform.position.y < myGameManager.levelConstraintTop)
             {
-                transform.Translate(new Vector2(0, 1.25f));
+                transform.Translate(new Vector2(0, 1f));
             }
             else if (Input.GetKeyUp(KeyCode.DownArrow) && transform.position.y > myGameManager.levelConstraintBottom) 
             {
-                transform.Translate(new Vector2(0, -1.25f));
+                transform.Translate(new Vector2(0, -1f));
             }
             else if (Input.GetKeyUp(KeyCode.LeftArrow) && transform.position.x > myGameManager.levelConstraintLeft)
             {
-                transform.Translate(new Vector2(-1.25f, 0));
+                transform.Translate(new Vector2(-1f, 0));
             }
             else if (Input.GetKeyUp(KeyCode.RightArrow) && transform.position.x < myGameManager.levelConstraintRight)
             {
-                transform.Translate(new Vector2(1.25f, 0));
+                transform.Translate(new Vector2(1f, 0));
             }
             else if (Input.GetKeyUp(KeyCode.Space))
             {
@@ -61,24 +61,33 @@ public class Player : MonoBehaviour
             }
         }
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //Detect collisions between the GameObjects with Colliders attached
         if (playerIsAlive)
         {
-            if (collision.transform.parent.GetComponent<Vehicle>() != null)
+            //Check for a match with the specified tag on any GameObject that collides with your GameObject
+            if (collision.gameObject.tag == "Collider")
             {
+                //death ui
+                transform.position = new Vector2(0, -6.5f);
+                //score change
+                //Score goes down
                 //myScore += "Score: " + 10; //update string of collision
 
-                print("yes");
-                playerIsAlive = false;
-                playerCanMove = false;
+            }
+            if (collision.gameObject.tag == "lilypad")
+            {
+                Rabbit.transform = lilypad.transform
             }
         }
     }
+
+
     private bool calculateFinalScore()
     {
         //calculate all the given variables for scoring
         return false;
     }
 }
-
