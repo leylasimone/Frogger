@@ -1,0 +1,28 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Water : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        void OnTriggerEnter2D(Collider2D collision)
+        {
+            //Detect collisions between the GameObjects with Colliders attached
+
+            //Check for a match with the specified name on any GameObject that collides with your GameObject
+            if (gameObject.name == "Rabbit")
+            {
+                //If the GameObject's name matches the one you suggest, output this message in the console
+                Debug.Log("Do something");
+            }
+        }
+    }
+}
