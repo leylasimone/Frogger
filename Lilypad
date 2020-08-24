@@ -1,0 +1,48 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class LillyPad : MonoBehaviour
+{
+    public bool reverseOrder = false;
+    public Vector2 endPosition;
+    public Vector2 startingPosition;
+    public float speed;
+    public int moveDirection = 0;
+    // Start is called before the first frame update
+    void Start()
+    {
+        if (reverseOrder == true)
+        {
+            Vector2 temp = endPosition;
+            endPosition = startingPosition;
+            startingPosition = temp;
+        }
+
+        this.transform.position = startingPosition;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (reverseOrder)
+        {
+
+            transform.Translate(Vector2.left * Time.deltaTime * speed * moveDirection);
+        }
+        else
+        {
+            transform.Translate(Vector2.right * Time.deltaTime * speed * moveDirection);
+        }
+        //when you multiply the inequality on both sides by -1 (or divide by -1) the inequality changes
+        if ((transform.position.x * moveDirection) > (endPosition.x * moveDirection))
+        {
+            transform.position = startingPosition;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+    }
+}
