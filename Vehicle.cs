@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Security.Cryptography;
@@ -10,9 +10,7 @@ using UnityEngine;
 /// </summary>
 public class Vehicle : MonoBehaviour
 {
-    /// <summary>
     /// -1 = left, 1 = right
-    /// </summary>
     public int moveDirection = 0; //This variabe is to be used to indicate the direction the vehicle is moving in.
     public float speed; //This variable is to be used to control the speed of the vehicle.
     public Vector2 startingPosition; //This variable is to be used to indicate where on the map the vehicle starts (or spawns)
@@ -37,7 +35,6 @@ public class Vehicle : MonoBehaviour
     {
         if(reverseOrder)
         {
-
             transform.Translate(Vector2.left * Time.deltaTime * speed * moveDirection);
         }
         else
@@ -48,18 +45,6 @@ public class Vehicle : MonoBehaviour
         if ((transform.position.x * moveDirection) > (endPosition.x * moveDirection))
         {
             transform.position = startingPosition;
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //Detect collisions between the GameObjects with Colliders attached
-
-        //Check for a match with the specified name on any GameObject that collides with your GameObject
-        if (gameObject.name == "Rabbit")
-        {
-            //If the GameObject's name matches the one you suggest, output this message in the console
-            Debug.Log("Do something");
         }
     }
 
