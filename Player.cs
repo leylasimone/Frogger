@@ -111,7 +111,7 @@ public class Player : MonoBehaviour
             if (collision.gameObject.name.Contains("lily pad"))
             {
                 _onLilypad = true;
-                _waterTimer = 0.1f;
+                _waterTimer = 1.0f;
                 _lastpos = this.transform.position;
             }
         }        
@@ -119,7 +119,7 @@ public class Player : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collision)
     {
-      //Debug.Log(collision.gameObject.name);
+      Debug.Log(collision.gameObject.name);
       if (collision.gameObject.name.Contains("lily pad"))
       {
         if (this.transform.position == _lastpos)
@@ -128,15 +128,9 @@ public class Player : MonoBehaviour
         }
         else
         {
-            _waterTimer = 0.1f;
+            _waterTimer = 1.0f;
         }
       }
     }
 
-    private bool calculateFinalScore()
-    {
-        //calculate all the given variables for scoring
-        return false;
-    }
 }
-
