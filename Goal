@@ -1,0 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class goal : MonoBehaviour
+{
+
+    void OnTriggerEnter2D ()
+    {
+        //Debug.Log("Do something");
+        Score.CurrentScore += 50;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    void Update()
+    {
+        
+    }
+
+}
