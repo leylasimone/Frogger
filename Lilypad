@@ -1,5 +1,7 @@
+using Microsoft.Win32;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using UnityEngine;
 
 public class LilyPad : MonoBehaviour
@@ -9,7 +11,12 @@ public class LilyPad : MonoBehaviour
     public Vector2 startingPosition;
     public float speed = 1.0f;
     float timeInc;
-    public bool moveDirection = true;
+    public bool moveRight = true;
+
+    private float leftStart = -15;
+    private float rightStart = 10;
+    private int leftLimit = -16;
+    private int rightLimit = 11;
 
     // Start is called before the first frame update
     void Start()
@@ -31,13 +38,22 @@ public class LilyPad : MonoBehaviour
         if (timeInc >= speed)
         {
             timeInc = 0;
-            this.transform.position += new Vector3((moveDirection == true ? 1 : 1), 0, 0);
+            this.transform.position += new Vector3((moveRight == true ? 1 : -1), 0, 0);
         }
         /*when you multiply the inequality on both sides by -1 (or divide by -1) the inequality changes
         if ((transform.position.x * moveDirection) > (endPosition.x * moveDirection))
         {
             transform.position = startingPosition;
         }*/
+        if (this.transform.position.x > rightLimit)
+        {
+            this.transform.position = new Vector2(leftStart, this.transform.position.y);
+        }
+        if (this.transform.position.x < leftLimit)
+        {
+            this.transform.position = new Vector2(rightStart, this.transform.position.y);
+        }
+
     } 
 
     private void OnTriggerEnter2D(Collider2D collision)
