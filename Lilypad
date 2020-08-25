@@ -6,13 +6,14 @@ using UnityEngine;
 
 public class LilyPad : MonoBehaviour
 {
-    public bool reverseOrder = false;
-    public Vector2 endPosition;
-    public Vector2 startingPosition;
-    public float speed = 1.0f;
-    float timeInc;
-    public bool moveRight = true;
+    public bool reverseOrder = false; 
+    public Vector2 endPosition; //where they end x and y positions
+    public Vector2 startingPosition; //where they start x and y positions
+    public float speed = 1.0f; //how fast theyre moving
+    float timeInc; //incrementation of the speed
+    public bool moveRight = true; //lilypads moving left or right
 
+    //setting boundaries so they can loop
     private float leftStart = -15;
     private float rightStart = 10;
     private int leftLimit = -16;
@@ -27,24 +28,22 @@ public class LilyPad : MonoBehaviour
             endPosition = startingPosition;
             startingPosition = temp;
         }
-
         this.transform.position = startingPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
+         //changing the movement of the lilypads so that the rabbit can enter the location instead of the smooth
+         //movement like the cars that the rabbit cannot lock onto and move with 
         timeInc += Time.deltaTime;
         if (timeInc >= speed)
         {
             timeInc = 0;
             this.transform.position += new Vector3((moveRight == true ? 1 : -1), 0, 0);
         }
-        /*when you multiply the inequality on both sides by -1 (or divide by -1) the inequality changes
-        if ((transform.position.x * moveDirection) > (endPosition.x * moveDirection))
-        {
-            transform.position = startingPosition;
-        }*/
+        
+        //boundaries to move back and forth with 
         if (this.transform.position.x > rightLimit)
         {
             this.transform.position = new Vector2(leftStart, this.transform.position.y);
@@ -53,11 +52,5 @@ public class LilyPad : MonoBehaviour
         {
             this.transform.position = new Vector2(rightStart, this.transform.position.y);
         }
-
     } 
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-
-    }
 }
