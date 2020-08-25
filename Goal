@@ -10,14 +10,10 @@ public class goal : MonoBehaviour
 
     void OnTriggerEnter2D ()
     {
-        //Debug.Log("Do something");
+        //Debug.Log("Do something"); //for testing
+        //when player reaches the end they get 50 points and the scene restarts
         Score.CurrentScore += 50;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    void Update()
-    {
-        
     }
 
 }
