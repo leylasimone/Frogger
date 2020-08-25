@@ -17,10 +17,11 @@ public class Player : MonoBehaviour
 {
     private Vector3 _lastpos;
     private bool _onLilypad = false;
+    private float _waterTimer = 0.0f;
 
     public string playerName = ""; //The players name for the purpose of storing the high score
      
-    public const int playerTotalLives = 10; //Players total possible lives.
+    public int playerTotalLives = 5; //Players total possible lives.
     public int playerLivesRemaining; //PLayers actual lives remaining.
 
     public bool playerIsAlive = true; //Is the player currently alive?
@@ -41,6 +42,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _waterTimer -= Time.deltaTime;
+        if (_waterTimer <= 0)
+        {
+            _onLilypad = false;
+        }
+
         if(playerCanMove && playerIsAlive)
         {
             if (Input.GetKeyUp(KeyCode.UpArrow) && transform.position.y < myGameManager.levelConstraintTop)
@@ -71,32 +78,43 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Collider" && _onLilypad == false)
+        {
+            playerTotalLives -= 1;
+            Score.CurrentScore = 0;
+            Lives.TotalLives = playerTotalLives;
+            transform.position = new Vector2(0, -6.5f);
+            //playerIsAlive = false;
+            if (playerTotalLives <= 0)
+            {
+                Lives.TotalLives += playerTotalLives;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+
+            //death ui
+            //score change
+            //Score goes down
+            //myScore += "Score: " + 10; //update string of collision
+        }
+        //playerIsAlive = true;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Detect collisions between the GameObjects with Colliders attached
-        if (playerIsAlive)
+        if (playerIsAlive = true)
         {
             //Check for a match with the specified tag on any GameObject that collides with your GameObject
 
             if (collision.gameObject.name.Contains("lily pad"))
             {
                 _onLilypad = true;
+                _waterTimer = 0.1f;
                 _lastpos = this.transform.position;
             }
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Collider" && _onLilypad == false)
-        {
-            //death ui
-            Score.CurrentScore = 0;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            //score change
-            //Score goes down
-            //myScore += "Score: " + 10; //update string of collision
-        }
+        }        
     }
 
     void OnTriggerExit2D(Collider2D collision)
@@ -106,12 +124,11 @@ public class Player : MonoBehaviour
       {
         if (this.transform.position == _lastpos)
         {
-            this.transform.position += new Vector3((collision.gameObject.GetComponent<LilyPad>().moveDirection ? 1 : -1), 0, 0);
-
+            this.transform.position += new Vector3((collision.gameObject.GetComponent<LilyPad>().moveRight ? 1 : -1), 0, 0);
         }
         else
         {
-            _onLilypad = false;
+            _waterTimer = 0.1f;
         }
       }
     }
